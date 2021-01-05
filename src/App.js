@@ -32,15 +32,15 @@ function App() {
             <Divider />
             <Space>
               <Typography.Text>Subtask Name (Todo)</Typography.Text>
-              <Button type="danger">Delete</Button>
               <Button type="primary">Done</Button>
+              <Button type="danger">Delete</Button>
             </Space>
             <Space>
               <Typography.Text style={{ textDecoration: "line-through" }}>
-              Subtask Name (Done)
+                Subtask Name (Done)
               </Typography.Text>
+              <Button type="primary">Undone</Button>
               <Button type="danger">delete</Button>
-              <Button type="primary">Todo</Button>
             </Space>
           </Space>
         </Card>
