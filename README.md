@@ -10,7 +10,6 @@
          "task": [
             {
                "title": "String",
-               "description": "String",
                "isDone": "Boolean"
             }
          ]
@@ -21,7 +20,6 @@
          "task": [
             {
                "title": "String",
-               "description": "String",
                "isDone": "Boolean"
             }
          ]
