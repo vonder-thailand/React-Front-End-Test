@@ -10,62 +10,37 @@ const Container = styled.div`
   height: 100vh;
   padding: 16px 24px;
 `;
+
 function App() {
   return (
     <Container>
       <Space>
-        <Input />
-        <Button type="primary">ADD</Button>
+        <Input style={{ width: 400 }} placeholder="Enter Task Name" />
+        <Button type="primary">Create Task</Button>
       </Space>
       <Space direction="vertical" style={{ marginTop: 24 }}>
         <Card
-          title="TODO 1"
+          title="Sample Task"
           style={{ width: 600 }}
-          extra={<Button type="primary">DUPLICATE</Button>}
+          extra={<Button type="primary">Duplicate</Button>}
         >
           <Space direction="vertical" style={{ width: "100%" }}>
             <Space>
-              <Input />
-              <Button type="primary">ADD TASK</Button>
+              <Input placeholder="Enter Subtask Name" style={{ width: 400 }} />
+              <Button type="primary">Add Task</Button>
             </Space>
             <Divider />
             <Space>
-              <Typography.Text>TASK NAME 1</Typography.Text>
-              <Button type="danger">DELETE</Button>
-              <Button type="primary">DONE</Button>
+              <Typography.Text>Subtask Name (Todo)</Typography.Text>
+              <Button type="danger">Delete</Button>
+              <Button type="primary">Done</Button>
             </Space>
             <Space>
               <Typography.Text style={{ textDecoration: "line-through" }}>
-                TASK NAME 2
+              Subtask Name (Done)
               </Typography.Text>
-              <Button type="danger">DELETE</Button>
-              <Button type="primary">UNDONE</Button>
-            </Space>
-          </Space>
-        </Card>
-
-        <Card
-          title="TODO 2"
-          style={{ width: 600 }}
-          extra={<Button type="primary">DUPLICATE</Button>}
-        >
-          <Space direction="vertical" style={{ width: "100%" }}>
-            <Space>
-              <Input />
-              <Button type="primary">ADD TASK</Button>
-            </Space>
-            <Divider />
-            <Space>
-              <Typography.Text>TASK NAME 1</Typography.Text>
-              <Button type="danger">DELETE</Button>
-              <Button type="primary">DONE</Button>
-            </Space>
-            <Space>
-              <Typography.Text style={{ textDecoration: "line-through" }}>
-                TASK NAME 2
-              </Typography.Text>
-              <Button type="danger">DELETE</Button>
-              <Button type="primary">UNDONE</Button>
+              <Button type="danger">delete</Button>
+              <Button type="primary">Todo</Button>
             </Space>
           </Space>
         </Card>
