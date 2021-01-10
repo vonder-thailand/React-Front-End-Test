@@ -7,7 +7,9 @@ const SubTaskList = ({item, cart, subCart}) => {
     const dispatch = useDispatch();
     const [changeState, setChangeState] = useState(false)
     const [isModalVisible, setIsModalVisible] = useState(false);
-
+    useEffect(() => {
+      onChange()
+    }, [changeState])
     const layout = {
         labelCol: { span: 8 },
         wrapperCol: { span: 8 },
@@ -95,6 +97,7 @@ const SubTaskList = ({item, cart, subCart}) => {
     }
   }
 
+  console.log(item.isDone)
     return (
         <>
         {item.isDone === false ? (
