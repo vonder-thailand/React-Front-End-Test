@@ -53,13 +53,12 @@ const SubTaskList = ({item, cart, subCart}) => {
   };
 
   function onChange(e) {
-    let done = [];
+    let cart = [];
     if (typeof window !== "undefined") {
       // if cart is in local storage GET it
-      if (localStorage.getItem("subCart")) {
-        done = JSON.parse(localStorage.getItem("subCart"));
+      if (localStorage.getItem("cart")) {
+        cart = JSON.parse(localStorage.getItem("cart"));
       }
-
 
       for(let i = 0; i < cart.length; i++){
         for(let j = 0; j < cart[i].data[0].task.length; j++){
@@ -69,6 +68,8 @@ const SubTaskList = ({item, cart, subCart}) => {
           }
         }
     }
+
+    const result = cart[0].data.filter(word => word.length > 6);
       // cart.map((c, i) => {
       //   if (c._id === p._id) {
       //     cart[i].size = e.target.value;
@@ -77,14 +78,14 @@ const SubTaskList = ({item, cart, subCart}) => {
   
       
       // remove duplicates
-      let unique = _.uniqWith(done, _.isEqual);
+      let unique = _.uniqWith(cart, _.isEqual);
       // save to local storage
       // console.log('unique', unique)
-      localStorage.setItem("done", JSON.stringify(unique));
+      localStorage.setItem("cart", JSON.stringify(unique));
 
       // add to reeux state
       dispatch({
-        type: "ADD_TO_DONE",
+        type: "ADD_TO_CART",
         payload: unique,
       });
       // show cart items in side drawer
@@ -111,7 +112,7 @@ const SubTaskList = ({item, cart, subCart}) => {
         ): (
             <Space>
             <Typography.Text style={{ textDecoration: "line-through" }}>
-              Subtask Name (Done)
+            {item.title} (Done)
             </Typography.Text>
             <Button type="primary"  onClick={onChange}>Undone</Button>
             <Button type="danger"  onClick={handleRemove}>delete</Button>
