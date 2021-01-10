@@ -77,13 +77,50 @@ const TaskList = ({item, cart, done, subCart}) => {
           form.resetFields()
         }
       };
+
+      const handleDuplicate = () => {
+        let cart = [];
+        if (typeof window !== "undefined") {
+          // if cart is in local storage GET it
+          if (localStorage.getItem("cart")) {
+            cart = JSON.parse(localStorage.getItem("cart"));
+          }
+
+          // push new product to cart
+        cart.map((c, i) => {
+        if (c.data[0].name === item.data[0].name) {
+          let newArray = c.data.slice()
+          let a ={ ...newArray}
+          console.log(c)
+          cart.push({data: a})
+        } 
+    })
+      
+        //   remove duplicates
+          let unique = _.uniqWith(cart, _.isEqual);
+          // save to local storage
+          // console.log('unique', unique)
+          localStorage.setItem("cart", JSON.stringify(unique));
+    
+          // add to reeux state, 
+          dispatch({
+            type: "ADD_TO_CART",
+            payload: unique,
+          });
+        //   show cart items in side drawer
+          dispatch({
+            type: "SET_VISIBLE",
+            payload: true,
+          });
+        }
+      }
     return (
         <>
 
       <Card
         title={item.data[0].name}
         style={{ width: 600 }}
-        extra={<Button type="primary">Duplicate</Button>}
+        extra={<Button type="primary" onClick={handleDuplicate}>Duplicate</Button>}
       >
         <Space direction="vertical" style={{ width: "100%" }}>
           <Space>
