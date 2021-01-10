@@ -16,15 +16,13 @@ const Container = styled.div`
 function App() {
 
   const {cart, done, subCart} = useSelector((state) => ({...state}));
-  const handleCreateTask = () => {
-    
-  }
 
 
+  
   return (
     <Container>
       <Space>
-        <InputTask />
+        <InputTask subCart={subCart} />
       </Space>
       <Space direction="vertical" style={{ marginTop: 24 }}>
 
@@ -33,7 +31,7 @@ function App() {
       dataSource={cart}
       renderItem={item => (
        <List.Item>
-         <TaskList item={item} cart={cart} done={done} subCart={subCart} />
+         <TaskList key={item._id} item={item} cart={cart} done={done} subCart={subCart} />
        </List.Item>
       )}
     />

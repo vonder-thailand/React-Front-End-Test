@@ -5,7 +5,7 @@ import {Button, List, Input, Form, message, Checkbox, Card,
 Space,Divider, Typography
 } from 'antd'
 import SubTaskList from './SubTaskList';
-const TaskList = ({item, cart, done, subcart}) => {
+const TaskList = ({item, cart, done, subCart}) => {
     const [form] = Form.useForm()
     const [name, setName] = useState('')
     const dispatch = useDispatch();
@@ -37,8 +37,9 @@ const TaskList = ({item, cart, done, subcart}) => {
       setIsModalVisible(false);
     };
     
+
+    console.log(cart)
     const onFinish = values => {
-        console.log('value', values)
         let cart = [];
         if (typeof window !== "undefined") {
           // if cart is in local storage GET it
@@ -46,13 +47,16 @@ const TaskList = ({item, cart, done, subcart}) => {
             cart = JSON.parse(localStorage.getItem("cart"));
           }
 
-          console.log('cartttttt',cart[0].data[0].task)
           // push new product to cart
-          cart[0].data[0].task.push({
-            _id: cart.length,
-            ...values,
-            isDone: false
-          });
+        cart.map((c, i) => {
+        if (c.data[0].title === cart[i].data[0].title) {
+            cart[i].data[0].task.push({
+                ...values,
+                isDone: false
+              });
+        } 
+    })
+      
           // remove duplicates
           let unique = _.uniqWith(cart, _.isEqual);
           // save to local storage
@@ -73,27 +77,8 @@ const TaskList = ({item, cart, done, subcart}) => {
           form.resetFields()
         }
       };
-
-      console.log(item)
     return (
         <>
-        {/* <Checkbox onChange={onChange}>เสร็จแล้ว (Done)</Checkbox>
-            <Button type="primary" onClick={showModal}>
-        Edit
-      </Button>
-      <Modal title="Basic Modal" visible={isModalVisible} onOk={handleEdit} onCancel={handleCancel}>
-      <Form {...layout} name="nest-messages" validateMessages={validateMessages}>
-        <Form.Item name="name" label="Name Task" rules={[{ required: true }]}>
-          <Input defaultValue={p.name} name="name" onChange={(e) => setName(e.target.value)} />
-        </Form.Item>
-        <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-        </Form.Item>
-      </Form>
-      </Modal>
-      <Button type="danger" onClick={handleRemove}>
-        Remove
-      </Button> */}
-
 
       <Card
         title={item.data[0].name}
@@ -103,7 +88,7 @@ const TaskList = ({item, cart, done, subcart}) => {
         <Space direction="vertical" style={{ width: "100%" }}>
           <Space>
          <Form {...layout} form={form} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
-        <Form.Item name="name" label="Subtask Name" rules={[{ required: true }]}>
+        <Form.Item name="title" label="Subtask Name" rules={[{ required: true }]}>
           <Input placeholder="Enter Subtask Name" style={{ width: 400 }} rules={[{ required: true }]}  />
         </Form.Item>
         <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
@@ -119,7 +104,7 @@ const TaskList = ({item, cart, done, subcart}) => {
       dataSource={item.data[0].task}
       renderItem={item => (
         <List.Item>
-            <SubTaskList item={item} cart={cart} subcart={subcart} />
+            <SubTaskList item={item} cart={cart} subCart={subCart} />
         </List.Item>
       )}
     /> 

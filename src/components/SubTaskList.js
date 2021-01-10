@@ -37,8 +37,8 @@ const SubTaskList = ({item, cart, subCart}) => {
       }
       // [1,2,3,4,5]
       cart.map((product, i) => {
-        if (product.data[0].task[0]._id === cart[0].data[0].task[0]._id) {
-            cart[0].data[0].task.splice(i, 1);
+        if (product.data[0].task[0].title === cart[i].data[0].task[0].title) {
+            cart[i].data[0].task.splice(i, 1);
         }
       });
 
@@ -55,9 +55,15 @@ const SubTaskList = ({item, cart, subCart}) => {
     let done = [];
     if (typeof window !== "undefined") {
       // if cart is in local storage GET it
-      if (localStorage.getItem("done")) {
-        done = JSON.parse(localStorage.getItem("done"));
+      if (localStorage.getItem("subCart")) {
+        done = JSON.parse(localStorage.getItem("subCart"));
       }
+
+      cart.map((product, i) => {
+        if (product.data[0].task[0]._id === cart[0].data[0].task[0]._id) {
+            cart[0].data[0].task.splice(i, 1);
+        }
+      });
 
       cart.map((product, i) => {
         if (product.data[0]._id === item.data[0]._id) {
@@ -97,7 +103,7 @@ const SubTaskList = ({item, cart, subCart}) => {
         {item.isDone === false ? (
             <>
             <Space>
-            <Typography.Text>{item.name}</Typography.Text>
+            <Typography.Text>{item.title}</Typography.Text>
             <Button type="primary"  onChange={onChange}>Done</Button>
             <Button type="danger" onClick={handleRemove}>Delete</Button>
             </Space>

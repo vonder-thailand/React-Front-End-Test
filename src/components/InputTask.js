@@ -30,9 +30,8 @@ const validateMessages = {
       }
       // push new product to cart
       cart.push({
-        "data": [ 
+        data: [ 
         {
-        _id: cart.length,
         ...values,
         isAllDone: false,
         task: []
