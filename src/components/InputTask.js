@@ -2,7 +2,6 @@ import React from 'react'
 import { Form, Input, Button } from 'antd';
 import _ from "lodash";
 import { useDispatch } from "react-redux";
-
 const InputTask = () => {
 const [form] = Form.useForm()
 const dispatch = useDispatch();

@@ -15,7 +15,7 @@ const Container = styled.div`
 
 function App() {
 
-  const {cart, done, subcart} = useSelector((state) => ({...state}));
+  const {cart, done} = useSelector((state) => ({...state}));
   const handleCreateTask = () => {
     
   }
@@ -33,7 +33,7 @@ function App() {
       dataSource={cart}
       renderItem={item => (
        <List.Item>
-         <TaskList item={item} cart={cart} done={done} subcart={subcart} />
+         <TaskList item={item} cart={cart} done={done} />
        </List.Item>
       )}
     />

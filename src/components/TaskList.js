@@ -4,6 +4,7 @@ import _ from 'lodash'
 import {Button, List, Input, Form, message, Checkbox, Card,
 Space,Divider, Typography
 } from 'antd'
+import SubTaskList from './SubTaskList';
 const TaskList = ({item, cart, done, subcart}) => {
     const [form] = Form.useForm()
     const [name, setName] = useState('')
@@ -36,132 +37,41 @@ const TaskList = ({item, cart, done, subcart}) => {
       setIsModalVisible(false);
     };
     
-      const handleRemove = () => {
-    // console.log(p._id, "to remove");
-    let cart = [];
-
-    if (typeof window !== "undefined") {
-      if (localStorage.getItem("cart")) {
-        cart = JSON.parse(localStorage.getItem("cart"));
-      }
-      // [1,2,3,4,5]
-      cart.map((product, i) => {
-        if (product._id === item._id) {
-          cart.splice(i, 1);
+    const onFinish = values => {
+        console.log('value', values)
+        let cart = [];
+        if (typeof window !== "undefined") {
+          // if cart is in local storage GET it
+          if (localStorage.getItem("cart")) {
+            cart = JSON.parse(localStorage.getItem("cart"));
+          }
+          // push new product to cart
+          item.data[0].task.push({
+              _id: cart.length,
+            values,
+            finished: false
+          });
+          // remove duplicates
+          let unique = _.uniqWith(cart, _.isEqual);
+          // save to local storage
+          // console.log('unique', unique)
+          localStorage.setItem("cart", JSON.stringify(unique));
+    
+          // add to reeux state, 
+          dispatch({
+            type: "ADD_TO_CART",
+            payload: unique,
+          });
+          // show cart items in side drawer
+          dispatch({
+            type: "SET_VISIBLE",
+            payload: true,
+          });
+    
+          form.resetFields()
         }
-      });
+      };
 
-      localStorage.setItem("cart", JSON.stringify(cart));
-      dispatch({
-        type: "ADD_TO_CART",
-        payload: cart,
-      });
-      message.error('ลบข้อมูลสำเร็จแล้ว');
-    }
-  };
-
-  const handleEdit = () => {
-    let cart = [];
-
-    if (typeof window !== "undefined") {
-      if (localStorage.getItem("cart")) {
-        cart = JSON.parse(localStorage.getItem("cart"));
-      }
-
-      cart.map((product, i) => {
-        if (product._id === item._id) {
-          cart[i].name = name;
-        }
-      });
-
-      localStorage.setItem("cart", JSON.stringify(cart));
-      dispatch({
-        type: "ADD_TO_CART",
-        payload: cart,
-      });
-      message.success('แก้ไขข้อมูลสำเร็จแล้ว');
-    }
-  };
-
-  function onChange(e) {
-    let done = [];
-    if (typeof window !== "undefined") {
-      // if cart is in local storage GET it
-      if (localStorage.getItem("done")) {
-        done = JSON.parse(localStorage.getItem("done"));
-      }
-      // push new product to cart
-      done.push({
-        _id: done.length,
-        done: item.name,
-        finished: true
-      });
-      
-      // remove duplicates
-      let unique = _.uniqWith(done, _.isEqual);
-      // save to local storage
-      // console.log('unique', unique)
-      localStorage.setItem("done", JSON.stringify(unique));
-
-      // add to reeux state
-      dispatch({
-        type: "ADD_TO_DONE",
-        payload: unique,
-      });
-      // show cart items in side drawer
-      dispatch({
-        type: "SET_VISIBLE",
-        payload: true,
-      });
-
-      handleRemove()
-    }
-  }
-
-  const onFinish = values => {
-    let cart = [];
-    if (typeof window !== "undefined") {
-      // if cart is in local storage GET it
-      if (localStorage.getItem("cart")) {
-        cart = JSON.parse(localStorage.getItem("cart"));
-      }
-      // push new product to cart
-      cart.push({
-        "data": [ 
-        {
-        _id: cart.length,
-        ...values,
-        isAllDone: false,
-        task: [
-            {
-                "title": "String",
-                "isDone": "Boolean"
-            }
-        ]
-      }
-    ]
-      });
-  
-      // remove duplicates
-      let unique = _.uniqWith(cart, _.isEqual);
-      // save to local storage
-      // console.log('unique', unique)
-      localStorage.setItem("cart", JSON.stringify(unique));
-
-      // add to reeux state
-      dispatch({
-        type: "ADD_TO_CART",
-        payload: unique,
-      });
-      // show cart items in side drawer
-      dispatch({
-        type: "SET_VISIBLE",
-        payload: true,
-      });
-
-      form.resetFields()
-    }
-  };
 console.log('cart', cart)
   console.log('cart[0]',cart[0].data[0].name)
   console.log('item', item)
@@ -192,7 +102,7 @@ console.log('cart', cart)
       >
         <Space direction="vertical" style={{ width: "100%" }}>
           <Space>
-          <Form {...layout} form={form} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
+         <Form {...layout} form={form} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
         <Form.Item name="name" label="Subtask Name" rules={[{ required: true }]}>
           <Input placeholder="Enter Subtask Name" style={{ width: 400 }} rules={[{ required: true }]}  />
         </Form.Item>
@@ -209,18 +119,7 @@ console.log('cart', cart)
       dataSource={cart}
       renderItem={item => (
         <List.Item>
-        <Space>
-            <Typography.Text>Subtask Name (Todo)</Typography.Text>
-            <Button type="primary"  onChange={onChange}>Done</Button>
-            <Button type="danger" onClick={handleRemove}>Delete</Button>
-          </Space>
-          <Space>
-            <Typography.Text style={{ textDecoration: "line-through" }}>
-              Subtask Name (Done)
-            </Typography.Text>
-            <Button type="primary">Undone</Button>
-            <Button type="danger">delete</Button>
-          </Space>
+            <SubTaskList item={item} cart={cart} done={done} />
         </List.Item>
       )}
     /> 
