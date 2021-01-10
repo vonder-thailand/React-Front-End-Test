@@ -104,7 +104,7 @@ const TaskList = ({item, cart, done, subCart}) => {
       dataSource={item.data[0].task}
       renderItem={item => (
         <List.Item>
-            <SubTaskList item={item} cart={cart} subCart={subCart} />
+            <SubTaskList key={item.title} item={item} cart={cart} subCart={subCart} />
         </List.Item>
       )}
     /> 

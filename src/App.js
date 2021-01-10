@@ -31,7 +31,7 @@ function App() {
       dataSource={cart}
       renderItem={item => (
        <List.Item>
-         <TaskList key={item._id} item={item} cart={cart} done={done} subCart={subCart} />
+         <TaskList key={item.name} item={item} cart={cart} done={done} subCart={subCart} />
        </List.Item>
       )}
     />

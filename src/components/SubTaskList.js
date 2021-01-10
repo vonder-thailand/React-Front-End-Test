@@ -36,11 +36,13 @@ const SubTaskList = ({item, cart, subCart}) => {
         cart = JSON.parse(localStorage.getItem("cart"));
       }
       // [1,2,3,4,5]
-      cart.map((c, i) => {
-        if (cart[i].data[0].task[i].title === item.title) {
-            cart[i].data[0].task.splice(i, 1);
-        }
-      });
+      for(let i = 0; i < cart.length; i++){
+          for(let j = 0; j < cart[i].data[0].task.length; j++){
+            if (cart[i].data[0].task[j].title === item.title) {
+                cart[i].data[0].task.splice(j, 1);
+            }
+          }
+      }
 
       localStorage.setItem("cart", JSON.stringify(cart));
       dispatch({
