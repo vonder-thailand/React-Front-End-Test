@@ -116,7 +116,7 @@ const TaskList = ({item, cart, done, subcart}) => {
           <Divider />
           <List
       bordered
-      dataSource={cart[0].data[0].task}
+      dataSource={item.data[0].task}
       renderItem={item => (
         <List.Item>
             <SubTaskList item={item} cart={cart} subcart={subcart} />
