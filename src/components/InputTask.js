@@ -35,13 +35,7 @@ const validateMessages = {
         _id: cart.length,
         ...values,
         isAllDone: false,
-        task: [
-            {
-                "_id": cart.length,
-                "title": "String",
-                "isDone": "Boolean"
-            }
-        ]
+        task: []
       }
     ]
       });

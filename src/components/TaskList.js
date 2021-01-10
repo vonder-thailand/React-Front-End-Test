@@ -45,11 +45,13 @@ const TaskList = ({item, cart, done, subcart}) => {
           if (localStorage.getItem("cart")) {
             cart = JSON.parse(localStorage.getItem("cart"));
           }
+
+          console.log('cartttttt',cart[0].data[0].task)
           // push new product to cart
-          item.data[0].task.push({
-              _id: cart.length,
-            values,
-            finished: false
+          cart[0].data[0].task.push({
+            _id: cart.length,
+            ...values,
+            isDone: false
           });
           // remove duplicates
           let unique = _.uniqWith(cart, _.isEqual);
@@ -72,9 +74,7 @@ const TaskList = ({item, cart, done, subcart}) => {
         }
       };
 
-console.log('cart', cart)
-  console.log('cart[0]',cart[0].data[0].name)
-  console.log('item', item)
+      console.log(item)
     return (
         <>
         {/* <Checkbox onChange={onChange}>เสร็จแล้ว (Done)</Checkbox>
@@ -116,10 +116,10 @@ console.log('cart', cart)
           <Divider />
           <List
       bordered
-      dataSource={cart}
+      dataSource={cart[0].data[0].task}
       renderItem={item => (
         <List.Item>
-            <SubTaskList item={item} cart={cart} done={done} />
+            <SubTaskList item={item} cart={cart} subcart={subcart} />
         </List.Item>
       )}
     /> 

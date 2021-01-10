@@ -4,7 +4,7 @@ import _ from 'lodash'
 import {Button, List, Input, Form, message, Checkbox, Card,
 Space,Divider, Typography
 } from 'antd'
-const SubTaskList = ({item, cart, done}) => {
+const SubTaskList = ({item, cart, subCart}) => {
     const [form] = Form.useForm()
     const [name, setName] = useState('')
     const dispatch = useDispatch();
@@ -94,18 +94,25 @@ const SubTaskList = ({item, cart, done}) => {
 
     return (
         <>
-         <Space>
-            <Typography.Text>Subtask Name (Todo)</Typography.Text>
+        {item.isDone === false ? (
+            <>
+            <Space>
+            <Typography.Text>{item.name}</Typography.Text>
             <Button type="primary"  onChange={onChange}>Done</Button>
             <Button type="danger" onClick={handleRemove}>Delete</Button>
-          </Space>
-          <Space>
+            </Space>
+             </>
+        ): (
+            <Space>
             <Typography.Text style={{ textDecoration: "line-through" }}>
               Subtask Name (Done)
             </Typography.Text>
             <Button type="primary"  onClick={onChange}>Undone</Button>
             <Button type="danger"  onClick={handleRemove}>delete</Button>
           </Space>
+
+        )}
+           
    </>
     )
 }
