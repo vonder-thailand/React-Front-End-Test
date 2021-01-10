@@ -1,6 +1,8 @@
-import { Button, Card, Divider, Input, Space, Typography } from "antd";
+import { Button, Card, Divider, List, Input, Space, Typography } from "antd";
 import styled from "styled-components";
-
+import {useSelector} from "react-redux";
+import InputTask from "./components/InputTask";
+import TaskList from "./components/TaskList";
 const Container = styled.div`
   display: flex;
   align-items: center;
@@ -12,38 +14,31 @@ const Container = styled.div`
 `;
 
 function App() {
+
+  const {cart, done, subcart} = useSelector((state) => ({...state}));
+  const handleCreateTask = () => {
+    
+  }
+
+
   return (
     <Container>
       <Space>
-        <Input style={{ width: 400 }} placeholder="Enter Task Name" />
-        <Button type="primary">Create Task</Button>
+        <InputTask />
       </Space>
       <Space direction="vertical" style={{ marginTop: 24 }}>
-        <Card
-          title="Sample Task"
-          style={{ width: 600 }}
-          extra={<Button type="primary">Duplicate</Button>}
-        >
-          <Space direction="vertical" style={{ width: "100%" }}>
-            <Space>
-              <Input placeholder="Enter Subtask Name" style={{ width: 400 }} />
-              <Button type="primary">Add Task</Button>
-            </Space>
-            <Divider />
-            <Space>
-              <Typography.Text>Subtask Name (Todo)</Typography.Text>
-              <Button type="primary">Done</Button>
-              <Button type="danger">Delete</Button>
-            </Space>
-            <Space>
-              <Typography.Text style={{ textDecoration: "line-through" }}>
-                Subtask Name (Done)
-              </Typography.Text>
-              <Button type="primary">Undone</Button>
-              <Button type="danger">delete</Button>
-            </Space>
-          </Space>
-        </Card>
+
+      <List
+      bordered
+      dataSource={cart}
+      renderItem={item => (
+       <List.Item>
+         <TaskList item={item} cart={cart} done={done} subcart={subcart} />
+       </List.Item>
+      )}
+    />
+        
+       
       </Space>
     </Container>
   );

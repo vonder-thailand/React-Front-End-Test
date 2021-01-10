@@ -3,8 +3,18 @@ import "./index.css";
 import App from "./App";
 import "antd/dist/antd.css";
 import reportWebVitals from "./reportWebVitals";
+import { createStore } from "redux";
+import { Provider } from 'react-redux'
+import rootReducer from './reducers';
+import { composeWithDevTools } from "redux-devtools-extension";
+//store
+const store = createStore(rootReducer, composeWithDevTools());
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(
+    <Provider store={store}>
+<App />
+</Provider>
+, document.getElementById("root"));
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
