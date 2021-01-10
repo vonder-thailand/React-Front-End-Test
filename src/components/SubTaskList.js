@@ -37,8 +37,8 @@ const SubTaskList = ({item, cart, subCart}) => {
       }
       // [1,2,3,4,5]
       cart.map((product, i) => {
-        if (product.data[0].task[0]._id === item.data[0].task[0]._id) {
-          cart.splice(i, 1);
+        if (product.data[0].task[0]._id === cart[0].data[0].task[0]._id) {
+            cart[0].data[0].task.splice(i, 1);
         }
       });
 
