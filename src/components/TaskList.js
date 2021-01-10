@@ -29,13 +29,13 @@ const TaskList = ({item, cart, done, subCart}) => {
       };
       
 
-    const showModal = () => {
-      setIsModalVisible(true);
-    };
+    // const showModal = () => {
+    //   setIsModalVisible(true);
+    // };
   
-    const handleCancel = () => {
-      setIsModalVisible(false);
-    };
+    // const handleCancel = () => {
+    //   setIsModalVisible(false);
+    // };
     
 
     console.log(cart)

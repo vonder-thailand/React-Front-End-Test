@@ -1,14 +1,11 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {useDispatch} from "react-redux";
 import _ from 'lodash'
-import {Button, List, Input, Form, message, Checkbox, Card,
-Space,Divider, Typography
+import {Button, message, Space, Typography
 } from 'antd'
 const SubTaskList = ({item, cart, subCart}) => {
-    const [form] = Form.useForm()
-    const [name, setName] = useState('')
     const dispatch = useDispatch();
-
+    const [changeState, setChangeState] = useState(false)
     const [isModalVisible, setIsModalVisible] = useState(false);
 
     const layout = {
@@ -61,22 +58,20 @@ const SubTaskList = ({item, cart, subCart}) => {
         done = JSON.parse(localStorage.getItem("subCart"));
       }
 
-      cart.map((product, i) => {
-        if (product.data[0].task[0]._id === cart[0].data[0].task[0]._id) {
-            cart[0].data[0].task.splice(i, 1);
-        }
-      });
 
-      cart.map((product, i) => {
-        if (product.data[0]._id === item.data[0]._id) {
-            done.push({
-                _id: done.length,
-                done: item.name,
-                finished: true
-              });
+      for(let i = 0; i < cart.length; i++){
+        for(let j = 0; j < cart[i].data[0].task.length; j++){
+          if (cart[i].data[0].task[j].title === item.title) {
+            cart[i].data[0].task[j].isDone === false ? setChangeState(true) : setChangeState(false)
+            cart[i].data[0].task[j].isDone = changeState
+          }
         }
-      });
-      // push new product to cart
+    }
+      // cart.map((c, i) => {
+      //   if (c._id === p._id) {
+      //     cart[i].size = e.target.value;
+      //   }
+      // });
   
       
       // remove duplicates
@@ -96,7 +91,7 @@ const SubTaskList = ({item, cart, subCart}) => {
         payload: true,
       });
 
-      handleRemove()
+      // handleRemove()
     }
   }
 
@@ -106,7 +101,7 @@ const SubTaskList = ({item, cart, subCart}) => {
             <>
             <Space>
             <Typography.Text>{item.title}</Typography.Text>
-            <Button type="primary"  onChange={onChange}>Done</Button>
+            <Button type="primary"  onClick={onChange}>Done</Button>
             <Button type="danger" onClick={handleRemove}>Delete</Button>
             </Space>
              </>
