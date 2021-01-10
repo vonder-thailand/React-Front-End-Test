@@ -26,7 +26,7 @@ const SubTaskList = ({item, cart, subCart}) => {
           range: '${label} must be between ${min} and ${max}',
         },
       };
-    
+    console.log('item', item)
       const handleRemove = () => {
     // console.log(p._id, "to remove");
     let cart = [];
@@ -36,8 +36,8 @@ const SubTaskList = ({item, cart, subCart}) => {
         cart = JSON.parse(localStorage.getItem("cart"));
       }
       // [1,2,3,4,5]
-      cart.map((product, i) => {
-        if (product.data[0].task[0].title === cart[i].data[0].task[0].title) {
+      cart.map((c, i) => {
+        if (cart[i].data[0].task[i].title === item.title) {
             cart[i].data[0].task.splice(i, 1);
         }
       });

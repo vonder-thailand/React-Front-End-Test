@@ -49,7 +49,7 @@ const TaskList = ({item, cart, done, subCart}) => {
 
           // push new product to cart
         cart.map((c, i) => {
-        if (c.data[0].title === cart[i].data[0].title) {
+        if (c.data[0].name === item.data[0].name) {
             cart[i].data[0].task.push({
                 ...values,
                 isDone: false
