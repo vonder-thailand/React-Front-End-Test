@@ -1,4 +1,13 @@
-import { Button, Card, Divider, Input, Space, Typography } from "antd";
+import {
+  Button,
+  Card,
+  Col,
+  Divider,
+  Input,
+  Row,
+  Space,
+  Typography,
+} from "antd";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -22,26 +31,41 @@ function App() {
         <Card
           title="Sample Task"
           style={{ width: 600 }}
-          extra={<Button type="primary">Duplicate</Button>}
+          extra={
+            <>
+              <Button type="primary">Duplicate</Button>{" "}
+              <Button type="primary" danger>
+                Delete
+              </Button>
+            </>
+          }
         >
           <Space direction="vertical" style={{ width: "100%" }}>
             <Space>
               <Input placeholder="Enter Subtask Name" style={{ width: 400 }} />
-              <Button type="primary">Add Task</Button>
+              <Button type="primary">Add Subtask</Button>
             </Space>
             <Divider />
-            <Space>
-              <Typography.Text>Subtask Name (Todo)</Typography.Text>
-              <Button type="primary">Done</Button>
-              <Button type="danger">Delete</Button>
-            </Space>
-            <Space>
-              <Typography.Text style={{ textDecoration: "line-through" }}>
-                Subtask Name (Done)
-              </Typography.Text>
-              <Button type="primary">Undone</Button>
-              <Button type="danger">delete</Button>
-            </Space>
+            <Row>
+              <Col span={16}>
+                <Typography.Text>Subtask Name (Todo)</Typography.Text>
+              </Col>
+              <Col span={8}>
+                <Button type="primary">Done</Button>{" "}
+                <Button type="danger">Delete</Button>
+              </Col>
+            </Row>
+            <Row>
+              <Col span={16}>
+                <Typography.Text style={{ textDecoration: "line-through" }}>
+                  Subtask Name (Done)
+                </Typography.Text>
+              </Col>
+              <Col span={8}>
+                <Button type="primary">Undo</Button>{" "}
+                <Button type="danger">Delete</Button>
+              </Col>
+            </Row>
           </Space>
         </Card>
       </Space>

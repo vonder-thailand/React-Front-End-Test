@@ -9,7 +9,7 @@
          "isAllDone": "Boolean",
          "task": [
             {
-               "title": "String",
+               "name": "String",
                "isDone": "Boolean"
             }
          ]
@@ -19,7 +19,7 @@
          "isAllDone": "Boolean",
          "task": [
             {
-               "title": "String",
+               "name": "String",
                "isDone": "Boolean"
             }
          ]
